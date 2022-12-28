@@ -7,33 +7,14 @@ import { Product } from './models/product.model'
 })
 export class AppComponent {
   imgParent = '';
-  products: Product[] = [
-    {
-    id:'1',
-    name: 'prodct 1',
-    image: './assets/images/mario.jpeg',
-    price: 100
-    },
-    {
-      id:'2',
-      name: 'prodct 1',
-      image: './assets/images/mario.jpeg',
-      price: 100
-    },
-    {
-      id:'3',
-      name: 'prodct 1',
-      image: './assets/images/mario.jpeg',
-      price: 100
-    },{
-      id:'4',
-      name: 'prodct 1',
-      image: './assets/images/mario.jpeg',
-      price: 100
-    }
-  ];
+  showImg = true;
+
 
   onLoaded(img: string){
     console.log("log padre prro!", img);
+  }
+
+  toggleImg(){
+    this.showImg = !this.showImg;
   }
 }

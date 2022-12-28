@@ -1,3 +1,28 @@
+<p>
+  la cantidad {{myShoppingCart.length}}
+</p>
+<p>
+  Total: ${{total}}
+</p>
+<p>
+  today :{{today | timeAgo}}
+</p>
+<p>
+  otra fecha : {{date | timeAgo}}
+</p>
+<p>
+  {{'hOLA BasCVASsas AAAAaa' | uppercase}}
+</p>
 <div class="products--grid">
-  <app-product [product]="product" *ngFor="let product of products"></app-product>
+  <app-product
+    [product]="product"
+    *ngFor="let product of products"
+    (addedProduct)="onAddToShoppingCar($event)">
+    <!--
+      Acá en el addedProduct, lo que hacemos es escuchar el envío del hijo, osea producto que envía el objeto producto
+      y con el método "onAddToShoppingCar($event)" escuchamos desde productos el objeto recibido, cómo un match entre componentes
+
+    -->
+
+  </app-product>
 </div>

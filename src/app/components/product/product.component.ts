@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Product} from '../../models/product.model';
 @Component({
   selector: 'app-product',
@@ -11,12 +11,19 @@ export class ProductComponent implements OnInit {
     id:'',
     price:0,
     image:'',
-    name:''
+    title:'',
+    description:'',
+    categoty:''
   };
+  @Output() addedProduct = new EventEmitter<Product>();// acá se puede enviar el product cómo objeto completo
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onAddToCart(){
+    this.addedProduct.emit(this.product);// acá se llama al output que envía la info al padre, en este caso se envía el objeto product completo
   }
 
 }

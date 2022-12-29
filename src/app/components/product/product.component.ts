@@ -9,14 +9,17 @@ export class ProductComponent implements OnInit {
 
   @Input() product: Product = {
     id:'',
-    price:0,
-    image:'',
     title:'',
+    price:0,
+    images:[],
     description:'',
-    categoty:''
+    category:{
+      id:'',
+      name:''
+    }
   };
   @Output() addedProduct = new EventEmitter<Product>();// acá se puede enviar el product cómo objeto completo
-
+  @Output() showProduct = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit(): void {
@@ -25,6 +28,10 @@ export class ProductComponent implements OnInit {
 
   onAddToCart(){
     this.addedProduct.emit(this.product);// acá se llama al output que envía la info al padre, en este caso se envía el objeto product completo
+  }
+
+  onShowDetail(){
+    this.showProduct.emit(this.product.id);
   }
 
 }

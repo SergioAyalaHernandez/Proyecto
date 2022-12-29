@@ -1,7 +1,7 @@
 <div class="target">
   <p class="title">{{product.title}}</p>
-  <app-img [img]="product.image"></app-img>
+  <app-img *ngIf="product.images.length > 0" [img]="product.images[1]"></app-img>
   <h2>{{product.price | currency:'COP'}}</h2>
-
+  <button class="btn"(click)="onShowDetail()">Show detail </button>
   <button class="btn"(click)="onAddToCart()">Add cart </button>
 </div>

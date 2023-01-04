@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {switchMap} from 'rxjs/operators'
+import {zip} from 'rxjs'
 import {CreateProductDTO, Product, UpdateProductDto} from "../../models/product.model";
 import {StoreService} from '../../services/store.service';
 import {ProductsService} from '../../services/products.service';
@@ -27,6 +29,9 @@ export class ProductsComponent implements OnInit {
       name:''
     }
   }
+  limit = 10;
+  offset = 0;
+  statusDetail: 'loading' | 'success' | 'error' | 'init' = 'init';
   today = new Date();
 
   date = new Date(2021,1,21);
@@ -38,11 +43,11 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productServise.getAllProducts()
+    this.productServise.getProductsByPage(10,0)
       .subscribe(data => {
         console.log(data);
         this.products = data;
-        console.log(this.products);
+        this.offset += this.limit;
       });
   }
 
@@ -57,11 +62,18 @@ export class ProductsComponent implements OnInit {
   }
 
   onShowDetail(id: string){
+    this.statusDetail = 'loading';
+    this.toggleProductDetail();
     console.log('id del producto ' + id);
     this.productServise.getProduct(id).subscribe(data =>{
       console.log(data);
       this.toggleProductDetail();
       this.productChosen = data;
+      this.statusDetail = 'success';
+    },errorMessage => {
+      window.alert(errorMessage);
+      console.error(errorMessage);
+      this.statusDetail = 'error';
     })
   }
 
@@ -105,6 +117,29 @@ export class ProductsComponent implements OnInit {
       this.products.splice(productIndex, 1);
       this.showProductDetail = false;
     })
+  }
+
+  loadMore(){
+    this.productServise.getProductsByPage(this.limit,this.offset)
+      .subscribe(data => {
+        this.products = this.products.concat(data);
+        this.offset += this.limit;
+      });
+  }
+
+  readAndUpdate(id: string){
+    this.productServise.getProduct(id).pipe(
+      switchMap((product) => //con esta es apra hacer algo dependiente de otro
+        this.productServise.update(product.id, {title: 'change'}))
+    ).subscribe(
+      data =>{
+        console.log(data);
+       });
+   this.productServise.fetchReadAndUpdate(id, {title: 'change'})
+     .subscribe(response =>{
+        const product = response[0];
+        const read = response[1];
+      })
   }
 
 }

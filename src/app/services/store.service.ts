@@ -7,7 +7,7 @@ import {Product} from "../models/product.model";
 })
 export class StoreService {
   private myShoppingCart: Product[] = [];
-  private myCart = new BehaviorSubject<Product[]>([]); //<= esto mas lo de la linea 12, es para transmitir
+  private myCart = new BehaviorSubject<Product[]>([]); //<= esto mas lo de la linea 14, es para transmitir
                                                               //información a quien esté usando este servicio
                                                               //es decir, si hay cambios, los transmite
 

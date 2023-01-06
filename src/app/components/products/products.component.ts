@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {switchMap} from 'rxjs/operators'
 import {zip} from 'rxjs'
 import {CreateProductDTO, Product, UpdateProductDto} from "../../models/product.model";
@@ -15,7 +15,8 @@ export class ProductsComponent implements OnInit {
 
   myShoppingCart: Product[] = [];
   total =0;
-  products: Product[] = [];
+  @Input() products: Product[] = [];
+  @Output() loadMore = new EventEmitter;
 
   showProductDetail = false;
   productChosen: Product = {
@@ -29,8 +30,6 @@ export class ProductsComponent implements OnInit {
       name:''
     }
   }
-  limit = 10;
-  offset = 0;
   statusDetail: 'loading' | 'success' | 'error' | 'init' = 'init';
   today = new Date();
 
@@ -42,15 +41,6 @@ export class ProductsComponent implements OnInit {
     this.myShoppingCart = this.stroreService.getShoppingCart();
   }
 
-  ngOnInit(): void {
-    this.productServise.getProductsByPage(10,0)
-      .subscribe(data => {
-        console.log(data);
-        this.products = data;
-        this.offset += this.limit;
-      });
-  }
-
   onAddToShoppingCar(product: Product){
 
     this.stroreService.addProduct(product);
@@ -60,6 +50,7 @@ export class ProductsComponent implements OnInit {
   toggleProductDetail(){
     this.showProductDetail = !this.showProductDetail;
   }
+  ngOnInit(): void {}
 
   onShowDetail(id: string){
     this.statusDetail = 'loading';
@@ -119,12 +110,16 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  loadMore(){
-    this.productServise.getProductsByPage(this.limit,this.offset)
-      .subscribe(data => {
-        this.products = this.products.concat(data);
-        this.offset += this.limit;
-      });
+ // loadMore(){
+   // this.productServise.getProductsByPage(this.limit,this.offset)
+     // .subscribe(data => {
+       // this.products = this.products.concat(data);
+        //this.offset += this.limit;
+      //});
+  //}
+
+  onLoadMore(){
+    this.loadMore.emit();
   }
 
   readAndUpdate(id: string){

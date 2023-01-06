@@ -30,28 +30,12 @@ export class NavComponent implements OnInit {
   toggleMenu(){
     this.activeMenu = !this.activeMenu;
   }
-
-  createUser(){
-    this.usersService.create({
-      name: 'Sergio',
-      email: 'sergio@mail.com',
-      password: '123'
-    }).subscribe(rta=>{
-      console.log('Esta es la respuesta ',rta);
-    });
-  }
   login(){
-    this.authService.login('sergio@mail.com','123').subscribe(rta=>{
-      console.log(rta.access_token);
-      this.token = rta.access_token;
-      this.getProfile();
+    this.authService.loginAndGet('sergio@mail.com','123').subscribe(user=>{
+      this.profile = user;
     });
   }
 
-  getProfile(){
-    this.authService.profile(this.token).subscribe(profile =>{
-      this.profile = profile;
-    });
-  }
+
 
 }

@@ -3,11 +3,13 @@ import {HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode} from '@angula
 import {CreateProductDTO, Product, UpdateProductDto} from "../models/product.model";
 import {catchError, pipe, retry, map, zip} from "rxjs";
 import {throwError} from "rxjs";
+import {checkTime} from "../interceptos/time.interceptor";
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
+  private apiUrl2 = 'https://young-sands-07814.herokuapp.com/api/categories/';
   constructor(
     private http: HttpClient
   ) { }
@@ -18,7 +20,7 @@ export class ProductsService {
       params = params.set('limit',limit);
       params = params.set('offset',offset);
     }
-    return this.http.get<Product[]>(this.apiUrl,{params})
+    return this.http.get<Product[]>(this.apiUrl,{params, context: checkTime()})
     .pipe(
       retry(3),
       map(products => products.map(item => {
@@ -67,6 +69,17 @@ export class ProductsService {
    return zip( // esta es para hacer todo en paralelo
       this.getProduct(id),
       this.update(id, dto));
+  }
+
+  getByCategory(id: string, limit: number, offset: number){
+    let params = new HttpParams();
+    if(limit && offset){
+      params = params.set('limit',limit);
+      params = params.set('offset',offset);
+    }
+    return this.http.get<Product[]>(this.apiUrl2+id+'/products',{
+      params: {limit, offset}
+    })
   }
 
 }

@@ -11,6 +11,7 @@ import {switchMap} from "rxjs";
 export class CategoryComponent implements OnInit {
   products : Product[] = [];
   categoryId: string | null = null;
+  prodcutId: string | null = null;
   limit = 10;
   offset = 0;
   constructor(
@@ -29,7 +30,11 @@ export class CategoryComponent implements OnInit {
       })
     ).subscribe(data =>{
       this.products = data;
-    })
+    });
+    this.route.queryParamMap.subscribe(params => {
+      this.prodcutId = params.get('../product');
+      console.log(this.prodcutId);
+    });
   }
 
 }

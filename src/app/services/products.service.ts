@@ -10,6 +10,7 @@ import {checkTime} from "../interceptos/time.interceptor";
 export class ProductsService {
   private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
   private apiUrl2 = 'https://young-sands-07814.herokuapp.com/api/categories/';
+  private apiUrl3 = 'https://young-sands-07814.herokuapp.com/api/product';
   constructor(
     private http: HttpClient
   ) { }
@@ -81,5 +82,23 @@ export class ProductsService {
       params: {limit, offset}
     })
   }
+  getOne(id: string) {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === HttpStatusCode.Conflict) {
+            return throwError('Algo esta fallando en el server');
+          }
+          if (error.status === HttpStatusCode.NotFound) {
+            return throwError('El producto no existe');
+          }
+          if (error.status === HttpStatusCode.Unauthorized) {
+            return throwError('No estas permitido');
+          }
+          return throwError('Ups algo salio mal');
+        })
+      )
+  }
+
 
 }

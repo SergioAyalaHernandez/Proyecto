@@ -1,5 +1,3 @@
-<button (click)="createNewProduct()">Create</button>
-<button (click)="onShowDetail('115221')">Create no found</button>
 <div class="products--grid">
   <app-product
     [product]="product"
@@ -12,21 +10,22 @@
       y con el método "onAddToShoppingCar($event)" escuchamos desde productos el objeto recibido, cómo un match entre componentes
     -->
   </app-product>
-  <button (click)="onLoadMore()">Load More</button>
+  <button (click)="onLoadMore()">Load more</button>
 </div>
-
 <div class="product-detail" [class.active]="showProductDetail">
-  {{statusDetail}}
+  {{ statusDetail }}
   <div *ngIf="productChosen">
     <button (click)="toggleProductDetail()">Close</button>
-    <h1>{{productChosen.title}}</h1>
-      <swiper [slidesPerView]="1">
-        <ng-template swiperSlide *ngFor="let img of productChosen.images">
-          <img [src]="img" alt="">
-        </ng-template>
-      </swiper>
-    <p>{{productChosen.description}}</p>
-    <button (click)="updateProduct()">Editar</button>
-    <button (click)="deleteProduct()">Eliminar</button>
+    <h1>{{ productChosen.title }}</h1>
+    <swiper
+      [slidesPerView]="1"
+    >
+      <ng-template swiperSlide *ngFor="let img of productChosen.images">
+        <img [src]="img" alt="">
+      </ng-template>
+    </swiper>
+    <p>{{ productChosen.description }}</p>
+    <button (click)="updateProduct()">editar</button>
+    <button (click)="deleteProduct()">delete</button>
   </div>
 </div>

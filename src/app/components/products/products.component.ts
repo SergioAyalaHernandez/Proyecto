@@ -16,6 +16,12 @@ export class ProductsComponent implements OnInit {
   myShoppingCart: Product[] = [];
   total =0;
   @Input() products: Product[] = [];
+  @Input() //<--- de esta forma se leen los cambios continuos en el html ciclo de angular
+  set productId(id:string | null){
+    if(id){
+      this.onShowDetail(id);
+    }
+  }
   @Output() loadMore = new EventEmitter;
 
   showProductDetail = false;
@@ -52,21 +58,23 @@ export class ProductsComponent implements OnInit {
   }
   ngOnInit(): void {}
 
-  onShowDetail(id: string){
+  onShowDetail(id: string) {
     this.statusDetail = 'loading';
-    this.toggleProductDetail();
-    console.log('id del producto ' + id);
-    this.productServise.getProduct(id).subscribe(data =>{
-      console.log(data);
-      this.toggleProductDetail();
-      this.productChosen = data;
-      this.statusDetail = 'success';
-    },errorMessage => {
-      window.alert(errorMessage);
-      console.error(errorMessage);
-      this.statusDetail = 'error';
-    })
+    if (!this.showProductDetail) {
+      this.showProductDetail = true;
+    }
+    this.productServise.getOne(id).subscribe(
+      (data) => {
+        this.productChosen = data;
+        this.statusDetail = 'success';
+      },
+      (errorMsg) => {
+        window.alert(errorMsg);
+        this.statusDetail = 'error';
+      }
+    );
   }
+
 
   createNewProduct(){
     const product: CreateProductDTO = {
@@ -136,5 +144,7 @@ export class ProductsComponent implements OnInit {
         const read = response[1];
       })
   }
+
+
 
 }

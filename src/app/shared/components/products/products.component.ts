@@ -1,9 +1,9 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {switchMap} from 'rxjs/operators'
 import {zip} from 'rxjs'
-import {CreateProductDTO, Product, UpdateProductDto} from "../../models/product.model";
-import {StoreService} from '../../services/store.service';
-import {ProductsService} from '../../services/products.service';
+import {CreateProductDTO, Product, UpdateProductDto} from "../../../models/product.model";
+import {StoreService} from '../../../services/store.service';
+import {ProductsService} from '../../../services/products.service';
 
 import SwiperCore from 'swiper';
 @Component({

@@ -16,25 +16,37 @@ export class CategoryComponent implements OnInit {
   offset = 0;
   constructor(
     private route: ActivatedRoute,
-    private productsServece: ProductsService
-  ) { }
+    private productsService: ProductsService
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      switchMap(params =>{
-        this.categoryId = params.get('id');
-        if(this.categoryId){
-          return this.productsServece.getByCategory(this.categoryId, this.limit,this.offset)
+    this.route.paramMap
+      .pipe(
+        switchMap((params) => {
+          this.categoryId = params.get('id');
+          if (this.categoryId) {
+            return this.productsService.getByCategory(
+              this.categoryId,
+              this.limit,
+              this.offset
+            );
           }
           return [];
-      })
-    ).subscribe(data =>{
-      this.products = data;
-    });
-    this.route.queryParamMap.subscribe(params => {
-      this.prodcutId = params.get('../product');
-      console.log(this.prodcutId);
-    });
+        })
+      )
+      .subscribe((data) => {
+        this.products = data;
+      });
   }
 
+  onLoadMore() {
+    if (this.categoryId) {
+      this.productsService
+        .getByCategory(this.categoryId, this.limit, this.offset)
+        .subscribe((data) => {
+          this.products = this.products.concat(data);
+          this.offset += this.limit;
+        });
+    }
+  }
 }

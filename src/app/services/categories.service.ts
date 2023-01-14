@@ -9,7 +9,7 @@ import { environment } from './../../environments/environment';
 })
 export class CategoriesService {
 
-  private apiUrl = `${environment.API_URL}api/categories`;
+  private apiUrl = "https://young-sands-07814.herokuapp.com/"+"api/categories";
 
   constructor(
     private http: HttpClient

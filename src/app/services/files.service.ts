@@ -14,7 +14,7 @@ interface File {
 })
 export class FilesService {
 
-  private apiUrl = environment.API_URL+'api/files';
+  private apiUrl = "https://young-sands-07814.herokuapp.com/"+'api/files';
   constructor(
     private http: HttpClient
   ) { }

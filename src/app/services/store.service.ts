@@ -12,6 +12,8 @@ export class StoreService {
                                                               //es decir, si hay cambios, los transmite
 
   myCart$ = this.myCart.asObservable();
+
+
   constructor() { }
 
   addProduct(product:Product){

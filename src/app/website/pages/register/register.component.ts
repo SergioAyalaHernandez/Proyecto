@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {OnExit} from "../../../guards/exit.guard";
 
 @Component({
   selector: 'app-register',
@@ -12,4 +13,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onExit(){
+    const rta = confirm("Estas seguro de salir?");
+    return rta;
+  }
 }

@@ -7,14 +7,11 @@ import {CreateUserDTO, User} from "../models/user.model";
 })
 export class UsersService {
 
-  private apiUrl = environment.API_URL+'api/Users';
+  private apiUrl = "https://young-sands-07814.herokuapp.com/"+'api/users';
 
   constructor(
     private http: HttpClient
   ) { }
-
-
-
   create(dto: CreateUserDTO){
     return this.http.post(this.apiUrl, dto);
   }

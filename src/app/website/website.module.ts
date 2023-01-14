@@ -13,7 +13,8 @@ import {ProfileComponent} from "./pages/profile/profile.component";
 import {ProductDetailComponent} from "./pages/product-detail/product-detail.component";
 import {LayaoutComponent} from "./components/layaout/layaout.component";
 import {SwiperModule} from "swiper/angular";
-import {SharedModule} from './../shared/shared.module'
+import {SharedModule} from './../shared/shared.module';
+import { FooterComponent } from './components/footer/footer.component'
 
 
 
@@ -28,7 +29,8 @@ import {SharedModule} from './../shared/shared.module'
     RecoveryComponent,
     ProfileComponent,
     ProductDetailComponent,
-    LayaoutComponent
+    LayaoutComponent,
+    FooterComponent
 
   ],
   imports: [

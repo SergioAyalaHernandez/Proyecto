@@ -3,7 +3,7 @@
   <a [routerLink]="['/product',product.id]">
     <app-img *ngIf="product.images.length > 0" [img]="product.images[1]"></app-img>
   </a>
-  <h2>{{product.price | currency:'COP'}}</h2>
+  <h2>{{product.price | currency:'$'}}</h2>
   <p >{{product?.taxes}}</p>
   <!--<button class="btn"(click)="onShowDetail()">Show detail </button>-->
   <a routerLink="." [queryParams]="{product: product.id}">Ver Detalle</a>
